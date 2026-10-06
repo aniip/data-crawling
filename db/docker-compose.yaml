@@ -1,0 +1,44 @@
+services:
+  l1:
+    image: postgres:17-alpine
+    container_name: bronze
+    restart: always
+    environment:
+      POSTGRES_USER: l1
+      POSTGRES_PASSWORD: l1admin
+      POSTGRES_DB: bronze
+    ports:
+      - "5001:5432"
+    volumes:
+      - pgbronze:/var/lib/postgresql/data
+  
+  l2:
+    image: postgres:17-alpine
+    container_name: silver
+    restart: always
+    environment:
+      POSTGRES_USER: l2
+      POSTGRES_PASSWORD: l2admin
+      POSTGRES_DB: silver
+    ports:
+      - "5002:5432"
+    volumes:
+      - pgsilver:/var/lib/postgresql/data
+
+  l3:
+    image: postgres:17-alpine
+    container_name: gold
+    restart: always
+    environment:
+      POSTGRES_USER: l3
+      POSTGRES_PASSWORD: l3admin
+      POSTGRES_DB: gold
+    ports:
+      - "5003:5432"
+    volumes:
+      - pggold:/var/lib/postgresql/data
+
+volumes:
+  pgbronze:
+  pgsilver:
+  pggold:
